@@ -16,20 +16,27 @@ import com.example.todoapp.ToDoViewModel
 import com.example.todoapp.data.models.Priority
 import com.example.todoapp.data.models.ToDoDataEntity
 import com.example.todoapp.databinding.FragmentAddBinding
+import com.example.todoapp.ui.SharedViewModel
 
 class AddFragment : Fragment() {
 
     private lateinit var binding: FragmentAddBinding
     private val viewModel: ToDoViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         setHasOptionsMenu(true)
         binding = FragmentAddBinding.inflate(layoutInflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.spinnerPriority.onItemSelectedListener = sharedViewModel.listener
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -48,13 +55,13 @@ class AddFragment : Fragment() {
         val priority = binding.spinnerPriority.selectedItem.toString()
         val description = binding.etDescription.text.toString()
 
-        val validation = checkDataFromUser(taskTitle, description)
+        val validation = sharedViewModel.checkDataFromUser(taskTitle, description)
 
         if (validation) {
             val newData = ToDoDataEntity(
                 0,
                 taskTitle,
-                parsePriority(priority),
+                sharedViewModel.parsePriority(priority),
                 description
             )
             viewModel.insertData(newData)
@@ -64,28 +71,4 @@ class AddFragment : Fragment() {
             Toast.makeText(requireContext(), "Error while trying to add!", Toast.LENGTH_SHORT).show()
         }
     }
-
-    private fun checkDataFromUser(title: String, descriptione: String): Boolean =
-        title.isNotEmpty() && descriptione.isNotEmpty()
-
-    private fun parsePriority(priority: String): Priority {
-        return when (priority) {
-            "High Priority" -> {
-                Priority.HIGH
-            }
-
-            "Medium Priority" -> {
-                Priority.MEDIUM
-            }
-
-            "Low Priority" -> {
-                Priority.LOW
-            }
-
-            else -> {
-                Priority.LOW
-            }
-        }
-    }
-
 }

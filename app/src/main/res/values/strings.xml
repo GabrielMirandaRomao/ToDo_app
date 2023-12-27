@@ -12,6 +12,8 @@
     <string name="label_add">Add</string>
     <string name="label_save">Save</string>
     <string name="label_delete">Delete</string>
+    <string name="label_task_description">Task description Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet et libero eget eleifend. Sed tempor elit non cursus molestie. Ut a cursus quam, nec lacinia dolor. Mauris varius interdum nisl at vehicula. Maecenas nec vehicula lectus. Aliquam vel mollis neque. Nullam imperdiet ornare fringilla. Quisque vitae dapibus est, nec tincidunt risus.</string>
+    <string name="label_task_title">Make a home layout</string>
 
     <string-array name="label_priorities">
         <item>High Priority</item>

@@ -14,12 +14,12 @@ class ToDoViewModel(application: Application): AndroidViewModel(application) {
 
     private val toDoDao = ToDoDatabase.getDatabase(application).toDoDao()
     private val repository: ToDoRepository = ToDoRepository(toDoDao)
-    private val getAllData: LiveData<List<ToDoDataEntity>>
+
+    val getAllData: LiveData<List<ToDoDataEntity>>
 
     init {
         repository
         getAllData = repository.getAllData
-
     }
 
     fun insertData(toDoDataEntity: ToDoDataEntity) {

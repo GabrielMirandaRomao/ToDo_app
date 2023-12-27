@@ -8,23 +8,25 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todoapp.R
+import com.example.todoapp.ToDoViewModel
 import com.example.todoapp.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
+    private val viewModel: ToDoViewModel by viewModels()
+    private val adapter: TaskListAdapter by lazy { TaskListAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        binding = FragmentListBinding.inflate(layoutInflater, container,false)
-
+        binding = FragmentListBinding.inflate(layoutInflater, container, false)
         setHasOptionsMenu(true)
-
         return binding.root
     }
 
@@ -34,7 +36,9 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setObserver()
         setListener()
+        setupRecyclerView()
     }
 
     private fun setListener() {
@@ -45,5 +49,14 @@ class ListFragment : Fragment() {
             findNavController().navigate(R.id.action_listFragment_to_updateFragment)
         }
     }
+    private fun setObserver(){
+        viewModel.getAllData.observe(viewLifecycleOwner) { toDoList ->
+            adapter.updateTaskList(toDoList)
+        }
+    }
 
+    private fun setupRecyclerView() {
+        binding.rvTasksList.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvTasksList.adapter = adapter
+    }
 }

@@ -1,9 +1,9 @@
 package com.example.todoapp.ui.list
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
 import com.example.todoapp.data.models.Priority
@@ -55,7 +55,9 @@ class TaskListAdapter() : RecyclerView.Adapter<TaskListAdapter.NewTaskViewHolder
         }
 
         holder.itemView.setOnClickListener {
-            Log.d("***Holder", "teste de click")
+            val action =
+                ListFragmentDirections.actionListFragmentToUpdateFragment(taskList[position])
+            holder.itemView.findNavController().navigate(action)
         }
     }
 
@@ -63,5 +65,4 @@ class TaskListAdapter() : RecyclerView.Adapter<TaskListAdapter.NewTaskViewHolder
         this.taskList = listToDO
         notifyDataSetChanged()
     }
-
 }

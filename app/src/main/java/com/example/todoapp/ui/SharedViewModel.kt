@@ -52,8 +52,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun checkDataFromUser(title: String, descriptione: String): Boolean =
-        title.isNotEmpty() && descriptione.isNotEmpty()
+    fun checkDataFromUser(title: String, description: String): Boolean =
+        title.isNotEmpty() && description.isNotEmpty()
 
     fun parsePriority(priority: String): Priority {
         return when (priority) {

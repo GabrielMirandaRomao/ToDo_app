@@ -1,14 +1,17 @@
-package com.example.todoapp.ui.list
+package com.example.todoapp.ui.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DiffUtil.DiffResult
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
 import com.example.todoapp.data.models.Priority
 import com.example.todoapp.data.models.ToDoDataEntity
 import com.example.todoapp.databinding.TaskItemBinding
+import com.example.todoapp.ui.list.ListFragmentDirections
 
 class TaskListAdapter() : RecyclerView.Adapter<TaskListAdapter.NewTaskViewHolder>() {
 
@@ -61,8 +64,10 @@ class TaskListAdapter() : RecyclerView.Adapter<TaskListAdapter.NewTaskViewHolder
         }
     }
 
-    fun updateTaskList(listToDO: List<ToDoDataEntity>) {
-        this.taskList = listToDO
-        notifyDataSetChanged()
+    fun updateTaskList(listToDo: List<ToDoDataEntity>) {
+        val toDoDiffUtil = ToDoDiffUtil(taskList, listToDo)
+        val toDoDiffResult = DiffUtil.calculateDiff(toDoDiffUtil)
+        this.taskList = listToDo
+        toDoDiffResult.dispatchUpdatesTo(this)
     }
 }

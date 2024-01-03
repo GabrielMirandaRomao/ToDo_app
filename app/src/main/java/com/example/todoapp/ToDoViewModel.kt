@@ -3,7 +3,6 @@ package com.example.todoapp
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.todoapp.data.ToDoDatabase
 import com.example.todoapp.data.models.ToDoDataEntity
@@ -11,19 +10,20 @@ import com.example.todoapp.data.repository.ToDoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ToDoViewModel(application: Application): AndroidViewModel(application) {
+class ToDoViewModel(application: Application) : AndroidViewModel(application) {
 
     private val toDoDao = ToDoDatabase.getDatabase(application).toDoDao()
     private val repository: ToDoRepository = ToDoRepository(toDoDao)
 
-    private val _toDoListStatus = MutableLiveData<Boolean>()
-    var toDoListStatus: LiveData<Boolean> = _toDoListStatus
-
     val getAllData: LiveData<List<ToDoDataEntity>>
+    val sortByHighPriority: LiveData<List<ToDoDataEntity>>
+    val sortByLowPriority: LiveData<List<ToDoDataEntity>>
 
     init {
         repository
         getAllData = repository.getAllData
+        sortByHighPriority = repository.sortByHighPriority
+        sortByLowPriority = repository.sortByLowPriority
     }
 
     fun insertData(toDoDataEntity: ToDoDataEntity) {
@@ -50,7 +50,6 @@ class ToDoViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun checkListStatus() {
-        _toDoListStatus.value = getAllData.value?.isEmpty() == true
-    }
+    fun searchDataBase(searchQuery: String): LiveData<List<ToDoDataEntity>> =
+        repository.searchDataBase(searchQuery)
 }

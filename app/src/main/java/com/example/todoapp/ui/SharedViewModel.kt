@@ -1,18 +1,23 @@
 package com.example.todoapp.ui
 
 import android.app.Application
-import android.content.Context
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
-import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.lifecycle.MutableLiveData
 import com.example.todoapp.R
 import com.example.todoapp.data.models.Priority
-import java.text.FieldPosition
+import com.example.todoapp.data.models.ToDoDataEntity
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
+
+    val emptyDataBase: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    fun checkIsDataBaseEmpty(toDoDataEntity: List<ToDoDataEntity>) {
+        emptyDataBase.value = toDoDataEntity.isEmpty()
+    }
 
     val listener: AdapterView.OnItemSelectedListener = object :
         AdapterView.OnItemSelectedListener {

@@ -16,38 +16,29 @@
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right" />
+            app:popExitAnim="@anim/to_right"
+            app:popUpTo="@id/addFragment"/>
         <action
             android:id="@+id/action_listFragment_to_updateFragment"
             app:destination="@id/updateFragment"
             app:enterAnim="@anim/from_left"
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
-            app:popExitAnim="@anim/to_left" />
+            app:popExitAnim="@anim/to_left"
+            app:popUpTo="@id/updateFragment"/>
     </fragment>
 
     <fragment
         android:id="@+id/addFragment"
         android:name="com.example.todoapp.ui.add.AddFragment"
         android:label="Add"
-        tools:layout="@layout/fragment_add" >
-        <action
-            android:id="@+id/action_addFragment_to_listFragment"
-            app:destination="@id/listFragment"
-            app:enterAnim="@anim/from_left"
-            app:exitAnim="@anim/to_right" />
-    </fragment>
+        tools:layout="@layout/fragment_add" />
 
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.example.todoapp.ui.update.UpdateFragment"
         android:label="Update"
         tools:layout="@layout/fragment_update" >
-        <action
-            android:id="@+id/action_updateFragment_to_listFragment"
-            app:destination="@id/listFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left" />
         <argument
             android:name="task_info"
             app:argType="com.example.todoapp.data.models.ToDoDataEntity"/>

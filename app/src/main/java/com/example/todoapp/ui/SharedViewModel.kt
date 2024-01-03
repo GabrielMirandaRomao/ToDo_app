@@ -55,8 +55,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     fun checkDataFromUser(title: String, description: String): Boolean =
         title.isNotEmpty() && description.isNotEmpty()
 
-    fun parsePriority(priority: String): Priority {
-        return when (priority) {
+    fun parsePriority(priority: String): Priority =
+        when (priority) {
             "High Priority" -> {
                 Priority.HIGH
             }
@@ -73,5 +73,13 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 Priority.LOW
             }
         }
-    }
+
+
+    fun parsePriorityToInt(priority: Priority) =
+        when (priority) {
+            Priority.HIGH -> 0
+            Priority.MEDIUM -> 1
+            Priority.LOW -> 2
+        }
 }
+
